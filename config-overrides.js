@@ -13,6 +13,7 @@ module.exports = override(
   // 重写webpack的alias（别名）
   addWebpackAlias({
     '@': path.resolve(__dirname, 'src'),
+    '@layouts': path.resolve(__dirname, 'src/layouts'),
     '@components': path.resolve(__dirname, 'src/components'),
     '@containers': path.resolve(__dirname, 'src/containers'),
     '@api': path.resolve(__dirname, 'src/api'),
