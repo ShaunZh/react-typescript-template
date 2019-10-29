@@ -1,9 +1,6 @@
 import React from 'react'
 import './App.css'
-import Router from 'router'
-// import { Button } from 'antd';
-import { Button, WhiteSpace, WingBlank } from 'antd-mobile'
-import Hello from '@containers/Hello'
+import Router from './router'
 
 const App: React.FunctionComponent = () => {
   return (

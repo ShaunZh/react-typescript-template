@@ -1,12 +1,18 @@
+/*
+ * @Description: 今日状态
+ * @Author: Hexon
+ * @Date: 2019-10-28 17:35:19
+ * @LastEditors: Hexon
+ * @LastEditTime: 2019-10-29 10:28:33
+ */
 import * as React from 'react'
-
-interface Props {
-  name: string
-  enthusiasmLevel?: number
-}
-
-export default class TodayStatus extends React.Component<Props, object> {
+import MainLayout, { eMenu } from '@layouts/main-layout'
+export default class TodayStatus extends React.Component<{}, object> {
   public render() {
-    return <h1>今日状态</h1>
+    return (
+      <MainLayout currentTab={eMenu.todayStatus}>
+        <div className="today-status-container">今日状态</div>
+      </MainLayout>
+    )
   }
 }

@@ -1,17 +1,8 @@
 import * as React from 'react'
 import userApi from '@api/user'
-import MainLayout from '@layouts/main-layout'
+import MainLayout, { eMenu } from '@layouts/main-layout'
 
-function getExclamationMarks(numChars: number) {
-  return Array(numChars + 1).join('!')
-}
-
-interface Props {
-  name: string
-  enthusiasmLevel?: number
-}
-
-class ActivityPhoto extends React.Component<Props, object> {
+class ActivityPhoto extends React.Component<{}, object> {
   public componentDidMount() {
     console.log('componentDidMount')
     userApi.getInfo({}).then((res: any) => {
@@ -19,15 +10,10 @@ class ActivityPhoto extends React.Component<Props, object> {
     })
   }
   public render() {
-    const { name, enthusiasmLevel = 1 } = this.props
-    if (enthusiasmLevel <= 0) {
-      throw new Error('You could be a little more enthusiastic. :D')
-    }
     return (
-      <MainLayout currentTab="blueTab">
-        <div className="hello">
-          <div className="greeting">Hello {name + getExclamationMarks(enthusiasmLevel)}</div>
-        </div>
+      // 添加currentTab是为了保证在首次打开当前页面时就选中该tab
+      <MainLayout currentTab={eMenu.activityPhoto}>
+        <div className="activity-photo-container">活动照片</div>
       </MainLayout>
     )
   }
