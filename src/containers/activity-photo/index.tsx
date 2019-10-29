@@ -1,14 +1,9 @@
 import * as React from 'react'
 import userApi from '@api/user'
 import MainLayout, { eMenu } from '@layouts/main-layout'
+import { NavLink } from 'react-router-dom'
 
 // url地址信息
-interface Location {
-  search?: string
-  hash?: string
-  pathname: string
-}
-
 interface Props {
   location?: Location
 }
@@ -24,10 +19,10 @@ class ActivityPhoto extends React.Component<Props, object> {
   }
   public render() {
     return (
-      // 添加currentTab是为了保证在首次打开当前页面时就选中该tab
-      <MainLayout currentTab={eMenu.activityPhoto}>
-        <div className="activity-photo-container">活动照片</div>
-      </MainLayout>
+      <div className="activity-photo-container">
+        <h1>活动照片</h1>
+        <NavLink to="/test">go to test</NavLink>
+      </div>
     )
   }
 }
