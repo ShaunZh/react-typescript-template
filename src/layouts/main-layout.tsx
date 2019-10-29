@@ -3,30 +3,34 @@
  * @Author: Hexon
  * @Date: 2019-10-28 17:26:29
  * @LastEditors: Hexon
- * @LastEditTime: 2019-10-28 19:05:51
+ * @LastEditTime: 2019-10-29 10:24:16
  */
 
 import * as React from 'react'
 import { TabBar } from 'antd-mobile'
+import { createHashHistory } from 'history'
+
+export enum eMenu {
+  activityPhoto = 'activityPhoto',
+  todayStatus = 'today-status',
+  dailyFood = 'daily-food',
+  more = 'more'
+}
 interface State {
   hidden: boolean
-  currentTab: string
+  currentTab: eMenu
 }
 interface Props {
   children: React.ReactChild // 子组件
   // isFooterVisible?: boolean // 是否显示
-  currentTab?: string // 当前展示的tab
+  currentTab?: eMenu // 当前展示的tab
 }
 
 export default class MainLayout extends React.Component<Props, State> {
-  // public readonly state = {
-  //   hidden: false,
-  //   currentTab: '' // 默认tab
-  // }
   public constructor(props: Props) {
     super(props)
     this.state = {
-      currentTab: props.currentTab || 'blueTab',
+      currentTab: props.currentTab || eMenu.activityPhoto,
       hidden: false
     }
   }
@@ -45,8 +49,8 @@ export default class MainLayout extends React.Component<Props, State> {
             hidden={this.state.hidden}
           >
             <TabBar.Item
-              title="Life"
-              key="Life"
+              title="活动照片"
+              key="activity-photo"
               icon={
                 <div
                   style={{
@@ -67,12 +71,13 @@ export default class MainLayout extends React.Component<Props, State> {
                   }}
                 />
               }
-              selected={this.state.currentTab === 'blueTab'}
+              selected={this.state.currentTab === eMenu.activityPhoto}
               badge={1}
               onPress={() => {
                 this.setState({
-                  currentTab: 'blueTab'
+                  currentTab: eMenu.activityPhoto
                 })
+                createHashHistory().push('/activity-photo')
               }}
               data-seed="logId"
             >
@@ -99,14 +104,15 @@ export default class MainLayout extends React.Component<Props, State> {
                   }}
                 />
               }
-              title="Koubei"
-              key="Koubei"
+              title="今日状态"
+              key="today-status"
               badge="new"
-              selected={this.state.currentTab === 'redTab'}
+              selected={this.state.currentTab === eMenu.todayStatus}
               onPress={() => {
                 this.setState({
-                  currentTab: 'redTab'
+                  currentTab: eMenu.todayStatus
                 })
+                createHashHistory().push('/today-status')
               }}
               data-seed="logId1"
             >
@@ -133,14 +139,15 @@ export default class MainLayout extends React.Component<Props, State> {
                   }}
                 />
               }
-              title="Friend"
-              key="Friend"
+              title="每日食谱"
+              key="daily-food"
               dot
-              selected={this.state.currentTab === 'greenTab'}
+              selected={this.state.currentTab === eMenu.dailyFood}
               onPress={() => {
                 this.setState({
-                  currentTab: 'greenTab'
+                  currentTab: eMenu.dailyFood
                 })
+                createHashHistory().push('/daily-food')
               }}
             >
               greenTab
@@ -148,13 +155,14 @@ export default class MainLayout extends React.Component<Props, State> {
             <TabBar.Item
               icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
               selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
-              title="My"
-              key="my"
-              selected={this.state.currentTab === 'yellowTab'}
+              title="了解更多"
+              key="more"
+              selected={this.state.currentTab === eMenu.more}
               onPress={() => {
                 this.setState({
-                  currentTab: 'yellowTab'
+                  currentTab: eMenu.more
                 })
+                createHashHistory().push('/more')
               }}
             >
               yellowTab
