@@ -2,9 +2,22 @@ import * as React from 'react'
 import userApi from '@api/user'
 import MainLayout, { eMenu } from '@layouts/main-layout'
 
-class ActivityPhoto extends React.Component<{}, object> {
+// url地址信息
+interface Location {
+  search?: string
+  hash?: string
+  pathname: string
+}
+
+interface Props {
+  location?: Location
+}
+
+class ActivityPhoto extends React.Component<Props, object> {
   public componentDidMount() {
     console.log('componentDidMount')
+    const { location } = this.props
+    console.log('params', location)
     userApi.getInfo({}).then((res: any) => {
       console.log('res', res)
     })
