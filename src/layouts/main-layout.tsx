@@ -3,18 +3,24 @@
  * @Author: Hexon
  * @Date: 2019-10-28 17:26:29
  * @LastEditors: Hexon
- * @LastEditTime: 2019-10-29 10:24:16
+ * @LastEditTime: 2019-10-29 16:29:12
  */
 
 import * as React from 'react'
 import { TabBar } from 'antd-mobile'
 import { createHashHistory } from 'history'
+import statusImg from '../assets/images/status.svg'
+import statusActiveImg from '../assets/images/status-active.svg'
+
+import payImg from '../assets/images/pay.svg'
+import payActiveImg from '../assets/images/pay-active.svg'
 
 export enum eMenu {
   activityPhoto = 'activityPhoto',
   todayStatus = 'today-status',
   dailyFood = 'daily-food',
-  more = 'more'
+  more = 'more',
+  empty = ''
 }
 interface State {
   hidden: boolean
@@ -23,16 +29,21 @@ interface State {
 interface Props {
   children: React.ReactChild // 子组件
   // isFooterVisible?: boolean // 是否显示
-  currentTab?: eMenu // 当前展示的tab
+  // location?: Location
+  currentTab?: eMenu
 }
 
 export default class MainLayout extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props)
     this.state = {
-      currentTab: props.currentTab || eMenu.activityPhoto,
+      currentTab: this.props.currentTab || eMenu.activityPhoto,
       hidden: false
     }
+  }
+
+  public componentDidMount() {
+    console.log('main-layout componentDidMount')
   }
 
   public render() {
@@ -56,8 +67,7 @@ export default class MainLayout extends React.Component<Props, State> {
                   style={{
                     width: '22px',
                     height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat'
+                    background: `url(${payImg}) center center /  21px 21px no-repeat`
                   }}
                 />
               }
@@ -66,8 +76,7 @@ export default class MainLayout extends React.Component<Props, State> {
                   style={{
                     width: '22px',
                     height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg) center center /  21px 21px no-repeat'
+                    background: `url(${payActiveImg}) center center /  21px 21px no-repeat`
                   }}
                 />
               }
@@ -124,8 +133,7 @@ export default class MainLayout extends React.Component<Props, State> {
                   style={{
                     width: '22px',
                     height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                    background: `url(${statusImg}) center center /  21px 21px no-repeat`
                   }}
                 />
               }
@@ -134,8 +142,7 @@ export default class MainLayout extends React.Component<Props, State> {
                   style={{
                     width: '22px',
                     height: '22px',
-                    background:
-                      'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                    background: `url(${statusActiveImg}) center center /  21px 21px no-repeat`
                   }}
                 />
               }
