@@ -1,8 +1,9 @@
 // eslint-disable-next-line
-const { override, fixBabelImports, addWebpackAlias} = require('customize-cra')
+const { override, fixBabelImports, addWebpackAlias, addPostcssPlugins } = require('customize-cra')
+// eslint-disable-next-line
+const postcssPxtorem = require('postcss-pxtorem')
 // eslint-disable-next-line
 const path = require('path')
-
 
 module.exports = override(
   fixBabelImports('import', {
@@ -19,4 +20,14 @@ module.exports = override(
     '@api': path.resolve(__dirname, 'src/api'),
     '@utils': path.resolve(__dirname, 'src/utils')
   }),
+  addPostcssPlugins([
+    postcssPxtorem({
+      rootValue: 16,
+      propList: ['*'],
+      // 转换忽略规则
+      selectorBlackList: ['am-', /^html$/]
+      // propList: ['*', '!border*', '!font-size*', '!letter-spacing'],
+      // propWhiteList: []
+    })
+  ])
 )

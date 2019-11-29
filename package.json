@@ -50,6 +50,8 @@
     "eslint": "^6.5.1",
     "eslint-config-alloy": "^3.0.0",
     "eslint-plugin-react": "^7.16.0",
+    "node-sass": "^4.13.0",
+    "postcss-pxtorem": "^4.0.1",
     "prettier": "^1.18.2",
     "typescript": "^3.6.4"
   }
