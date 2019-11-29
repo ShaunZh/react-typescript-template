@@ -1,7 +1,15 @@
 import * as React from 'react'
 
-function Test() {
-  return <h1>Test Hello</h1>
+interface Props {
+  isAuthed?: boolean
 }
 
-export default Test
+export default class Test extends React.Component<Props, object> {
+  public componentDidMount() {
+    const { isAuthed } = this.props
+    console.log('ttttt', isAuthed)
+  }
+  public render() {
+    return <div>测试页面</div>
+  }
+}

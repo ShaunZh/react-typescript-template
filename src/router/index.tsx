@@ -22,20 +22,20 @@ export default class RouteConfig extends Component<{}, State> {
   }
 
   public componentDidMount() {
-    // 根据window.location.hash来设置state.currentTab以便初始化激活的底部tab
+    // 根据window.location.hash来设置state.currentTab以便初始化激活的底部talocation.hash来设置state.currentTab以便初始化激活的底部tabb
     console.log('props', window.location.hash)
   }
   public render() {
     return (
       <HashRouter>
         <Switch>
-          <Route path="/test" component={Test} />
+          <Route path="/test" render={(props) => <Test {...props} isAuthed={true} />} />
           <MainLayout currentTab={this.state.currentTab}>
             <Switch>
-              <Route path="/activity-photo" component={ActivityPhoto} />
-              <Route path="/today-status" component={TodayStatus} />
-              <Route path="/daily-food" component={DailyFood} />
-              <Route path="/more" component={More} />
+              <Route path="/activity-photo" exact component={ActivityPhoto} />
+              <Route path="/today-status" exact component={TodayStatus} />
+              <Route path="/daily-food" exact component={DailyFood} />
+              <Route path="/more" exact component={More} />
               <Redirect from="/" to="/activity-photo" exact></Redirect>
             </Switch>
           </MainLayout>

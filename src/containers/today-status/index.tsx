@@ -6,7 +6,6 @@
  * @LastEditTime: 2019-10-29 17:26:49
  */
 import * as React from 'react'
-import MainLayout, { eMenu } from '@layouts/main-layout'
 export default class TodayStatus extends React.Component<{}, object> {
   public render() {
     return <div className="today-status-container">今日状态</div>

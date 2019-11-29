@@ -6,7 +6,6 @@
  * @LastEditTime: 2019-10-29 14:25:38
  */
 import * as React from 'react'
-import MainLayout, { eMenu } from '@layouts/main-layout'
 
 export default class DailyFood extends React.Component<{}, object> {
   public render() {
