@@ -1,6 +1,7 @@
 import React from 'react'
 import './App.css'
 import Router from './router'
+import '@/assets/styles/index.scss'
 
 const App: React.FunctionComponent = () => {
   return (
