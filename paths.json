@@ -1,12 +1,25 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@layouts/*": ["layouts/*"],
-      "@components/*": ["components/*"],
-      "@containers/*": ["containers/*"],
-      "@utils/*": ["utils/*"],
-      "@api/*": ["api/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@layouts/*": [
+        "./src/layouts/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@containers/*": [
+        "./src/containers/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@api/*": [
+        "./src/api/*"
+      ]
     }
   }
 }

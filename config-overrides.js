@@ -18,7 +18,8 @@ module.exports = override(
     '@components': path.resolve(__dirname, 'src/components'),
     '@containers': path.resolve(__dirname, 'src/containers'),
     '@api': path.resolve(__dirname, 'src/api'),
-    '@utils': path.resolve(__dirname, 'src/utils')
+    '@utils': path.resolve(__dirname, 'src/utils'),
+    '@plugins': path.resolve(__dirname, 'src/plugins')
   }),
   addPostcssPlugins([
     postcssPxtorem({
