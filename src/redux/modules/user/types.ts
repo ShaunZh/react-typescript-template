@@ -1,9 +1,17 @@
 // action type
 export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_DATE = 'UPDATE_DATE'
 
 // state  interface
 export interface UserState {
-  name: string
+  name: string // 姓名
+  class: string // 班级
+  headImg: string // 头像
+  queryDate: string // 查询日期
+}
+
+export interface QueryDate {
+  queryDate: string
 }
 
 // action interface
@@ -12,4 +20,9 @@ interface UpdateUserAction {
   payload: UserState
 }
 
-export type UserActionTypes = UpdateUserAction
+interface UpdateQueryDateAction {
+  type: typeof UPDATE_DATE
+  payload: QueryDate
+}
+
+export type UserActionTypes = UpdateUserAction | UpdateQueryDateAction

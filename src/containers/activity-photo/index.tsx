@@ -3,15 +3,16 @@ import { connect, ConnectedProps } from 'react-redux'
 // import userApi from '@api/user'
 import { NavLink } from 'react-router-dom'
 import { AppState } from '@/redux'
-import { UPDATE_USER, UserState } from '@/redux/modules/user/types'
+import { UPDATE_USER, UserState, QueryDate, UPDATE_DATE } from '@/redux/modules/user/types'
 import './index.scss'
 
 const mapState = (state: AppState) => ({
-  username: state.user.name
+  user: state.user
 })
 
 const mapDispatch = {
-  updateUsername: (userInfo: UserState) => ({ type: UPDATE_USER, payload: userInfo })
+  updateUsername: (userInfo: UserState) => ({ type: UPDATE_USER, payload: userInfo }),
+  updateQueryDate: (date: QueryDate) => ({ type: UPDATE_DATE, payload: date })
 }
 
 const connector = connect(
@@ -21,10 +22,10 @@ const connector = connect(
 
 interface State {
   username: string
+  queryDate: string
 }
 
-// The inferred type will look like:
-// {username: string, toggleOn: () => void}
+// Infers the type of props that a connector will inject into a component.
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 type Props = PropsFromRedux
@@ -32,37 +33,38 @@ type Props = PropsFromRedux
 class ActivityPhoto extends React.Component<Props, State> {
   public constructor(props: Props) {
     super(props)
-    this.state = { username: '' }
+    this.state = { username: '', queryDate: '' }
     this.updateMessage = this.updateMessage.bind(this)
+    this.updateQueryDate = this.updateQueryDate.bind(this)
   }
-  // public readonly state: State = {
-  //   username: ''
-  // }
+
   public componentDidMount() {
     console.log('componentDidMount')
-    this.setState({
-      // username: this.props.username
-    })
-    // userApi.getInfo({}).then((res: any) => {
-    //   console.log('res', res)
-    // })
+    this.setState({})
   }
   public updateMessage(e: React.FormEvent<HTMLInputElement>): void {
     console.log('this: ', this)
     // this.setState({ username: e.currentTarget.value })
-    this.props.updateUsername({ name: e.currentTarget.value })
+    this.props.updateUsername({ ...this.props.user, name: e.currentTarget.value })
     console.log('state: ', this.state)
+  }
+
+  public updateQueryDate(e: React.FormEvent<HTMLInputElement>): void {
+    this.props.updateQueryDate({ queryDate: e.currentTarget.value })
   }
   public render() {
     return (
       <div className="activity-photo-container">
-        <h1>活动照片: {this.props.username}</h1>
+        <h1>活动照片: {this.props.user.name}</h1>
+        <h1>查询人气：{this.props.user.queryDate}</h1>
         <input
-          value={this.props.username}
+          value={this.props.user.name}
           onChange={this.updateMessage}
           className="chat-input"
           placeholder="请输入用户名"
         />
+        <br />
+        <input value={this.props.user.queryDate} onChange={this.updateQueryDate} placeholder="请输入查询日期" />
         <NavLink to="/test">go to test</NavLink>
       </div>
     )
