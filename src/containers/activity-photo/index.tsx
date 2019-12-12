@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 // import userApi from '@api/user'
 import { NavLink } from 'react-router-dom'
 import { AppState } from '@/redux'
-import { UPDATE_USER } from '@/redux/modules/user/types'
+import { UPDATE_USER, UserState } from '@/redux/modules/user/types'
 import './index.scss'
 
 const mapState = (state: AppState) => ({
@@ -11,7 +11,7 @@ const mapState = (state: AppState) => ({
 })
 
 const mapDispatch = {
-  updateUsername: (userInfo: AppState) => ({ type: UPDATE_USER, payload: userInfo })
+  updateUsername: (userInfo: UserState) => ({ type: UPDATE_USER, payload: userInfo })
 }
 
 const connector = connect(
@@ -41,7 +41,7 @@ class ActivityPhoto extends React.Component<Props, State> {
   public componentDidMount() {
     console.log('componentDidMount')
     this.setState({
-      username: this.props.username
+      // username: this.props.username
     })
     // userApi.getInfo({}).then((res: any) => {
     //   console.log('res', res)
@@ -49,16 +49,16 @@ class ActivityPhoto extends React.Component<Props, State> {
   }
   public updateMessage(e: React.FormEvent<HTMLInputElement>): void {
     console.log('this: ', this)
-    this.setState({ username: e.currentTarget.value })
-    this.props.updateUsername({ user: { name: e.currentTarget.value } })
+    // this.setState({ username: e.currentTarget.value })
+    this.props.updateUsername({ name: e.currentTarget.value })
     console.log('state: ', this.state)
   }
   public render() {
     return (
       <div className="activity-photo-container">
-        <h1>活动照片: {this.state.username}</h1>
+        <h1>活动照片: {this.props.username}</h1>
         <input
-          value={this.state.username}
+          value={this.props.username}
           onChange={this.updateMessage}
           className="chat-input"
           placeholder="请输入用户名"
