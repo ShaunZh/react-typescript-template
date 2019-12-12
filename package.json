@@ -22,7 +22,8 @@
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "remove": "^0.1.5"
+    "remove": "^0.1.5",
+    "styled-components": "^4.4.1"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -47,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/styled-components": "^4.4.1",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "eslint": "^6.5.1",
