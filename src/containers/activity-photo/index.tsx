@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { AppState } from '@/redux'
 import { UPDATE_USER, UserState, QueryDate, UPDATE_DATE } from '@/redux/modules/user/types'
+import HeadImg from './components/headImg'
 import './index.scss'
 
 const mapState = (state: AppState) => ({
@@ -55,6 +56,9 @@ class ActivityPhoto extends React.Component<Props, State> {
   public render() {
     return (
       <div className="activity-photo-container">
+        <div className="header">
+          <HeadImg src={this.props.user.headImg}></HeadImg>
+        </div>
         <h1>活动照片: {this.props.user.name}</h1>
         <h1>查询人气：{this.props.user.queryDate}</h1>
         <input
