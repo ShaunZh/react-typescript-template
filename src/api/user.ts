@@ -1,7 +1,7 @@
-import axiosConfig from '@utils/request'
+import axios from '@/plugins/axios/index'
 
 function getInfo(params: any) {
-  return axiosConfig.get('/mock', params)
+  return axios.get('/mock', params)
 }
 
 export default {
