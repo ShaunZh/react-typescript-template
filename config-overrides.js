@@ -23,7 +23,7 @@ module.exports = override(
   }),
   addPostcssPlugins([
     postcssPxtorem({
-      rootValue: 16,
+      rootValue: 32,
       propList: ['*'],
       // 转换忽略规则
       selectorBlackList: ['am-', /^html$/]
