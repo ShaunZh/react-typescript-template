@@ -4,6 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { AppState } from '@/redux'
 import { USER_UPDATE, UserState, QueryDate, USER_UPDATE_QUERY_DATE } from '@/redux/modules/user/types'
+
 import HeadImg from './components/headImg'
 import './index.scss'
 
@@ -41,7 +42,6 @@ class ActivityPhoto extends React.Component<Props, State> {
 
   public componentDidMount() {
     console.log('componentDidMount')
-    this.setState({})
   }
   public updateMessage(e: React.FormEvent<HTMLInputElement>): void {
     console.log('this: ', this)
