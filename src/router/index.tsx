@@ -1,46 +1,35 @@
 import React, { Component } from 'react'
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { HashRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom'
 
-import ActivityPhoto from '@containers/activity-photo'
-import TodayStatus from '@containers/today-status'
-import More from '@containers/more'
-import DailyFood from '@containers/daily-food'
-
-import Test from '@containers/Test'
 import MainLayout, { eMenu } from '@layouts/main-layout'
+import routes from './routes'
+import AuthorizedRoute from '@/components/authWrapper/authorizedRoute'
 
-interface State {
-  currentTab?: eMenu
-}
-
-export default class RouteConfig extends Component<{}, State> {
-  public constructor(props: {}) {
-    super(props)
-    this.state = {
-      currentTab: eMenu.empty
-    }
-  }
-
-  public componentDidMount() {
-    // 根据window.location.hash来设置state.currentTab以便初始化激活的底部talocation.hash来设置state.currentTab以便初始化激活的底部tabb
-    console.log('props', window.location.hash)
-  }
+export default class RouteConfig extends Component<{}> {
   public render() {
     return (
       <HashRouter>
-        <Switch>
-          <Route path="/test" render={(props) => <Test {...props} isAuthed={true} />} />
-          <MainLayout currentTab={this.state.currentTab}>
-            <Switch>
-              <Route path="/activity-photo" exact component={ActivityPhoto} />
-              <Route path="/today-status" exact component={TodayStatus} />
-              <Route path="/daily-food" exact component={DailyFood} />
-              <Route path="/more" exact component={More} />
-              <Redirect from="/" to="/activity-photo" exact></Redirect>
-            </Switch>
-          </MainLayout>
-        </Switch>
-        {/* <Redirect exact from="/" to="/activity-photo" /> */}
+        <MainLayout>
+          <Switch>
+            {routes.map((rc) => {
+              const { path, component, auth = '', redirectPath = '/no-auth', ...rest } = rc
+              return (
+                <AuthorizedRoute
+                  render={() => {
+                    return <div>无渲染内容</div>
+                  }}
+                  key={path}
+                  path={path}
+                  component={component}
+                  auth={auth}
+                  redirectPath={redirectPath}
+                  {...rest}
+                />
+              )
+            })}
+            <Redirect from="/" to="/activity-photo" exact></Redirect>
+          </Switch>
+        </MainLayout>
       </HashRouter>
     )
   }
