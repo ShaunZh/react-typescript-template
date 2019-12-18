@@ -3,10 +3,12 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import userReducer from './modules/user/reducer'
+import tokenReducer from './modules//auth/reducer'
 
 // combineReducers返回值是一个function，该函数的返回值是state
 const rootReducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  auth: tokenReducer
 })
 
 // <typeof rootReducer> === combineReducers的返回值，也就是一个function
