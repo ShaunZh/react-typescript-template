@@ -2,6 +2,7 @@
   "name": "kindergarten_parent",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@types/jest": "24.0.19",
     "@types/node": "12.11.6",
@@ -30,7 +31,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "prettier": "prettier -l \".src/**/*\""
+    "prettier": "prettier -l \".src/**/*\"",
+    "deploy": "react-app-rewired build && node ./deploy/index.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,9 +57,11 @@
     "eslint-config-alloy": "^3.0.0",
     "eslint-plugin-react": "^7.16.0",
     "node-sass": "^4.13.0",
+    "ora": "^4.0.3",
     "postcss-pxtorem": "^4.0.1",
     "prettier": "^1.18.2",
     "redux-devtools-extension": "^2.13.8",
+    "scp2": "^0.5.0",
     "typescript": "^3.6.4"
   }
 }
