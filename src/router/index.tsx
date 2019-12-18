@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { HashRouter, Switch, Route, Redirect, RouteProps } from 'react-router-dom'
+import { HashRouter, Switch, Redirect } from 'react-router-dom'
 
-import MainLayout, { eMenu } from '@layouts/main-layout'
+import MainLayout from '@layouts/main-layout'
 import routes from './routes'
 import AuthorizedRoute from '@/components/authWrapper/authorizedRoute'
 
@@ -11,6 +11,7 @@ export default class RouteConfig extends Component<{}> {
       <HashRouter>
         <MainLayout>
           <Switch>
+            <Redirect from="/" to="/activity-photo" exact></Redirect>
             {routes.map((rc) => {
               const { path, component, auth = '', redirectPath = '/no-auth', ...rest } = rc
               return (
@@ -27,7 +28,6 @@ export default class RouteConfig extends Component<{}> {
                 />
               )
             })}
-            <Redirect from="/" to="/activity-photo" exact></Redirect>
           </Switch>
         </MainLayout>
       </HashRouter>
