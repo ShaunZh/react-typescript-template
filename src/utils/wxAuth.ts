@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2019-12-13 16:36:10
  * @LastEditors: Hexon
- * @LastEditTime: 2019-12-18 11:06:15
+ * @LastEditTime: 2019-12-18 15:03:36
  */
 import locationSearch from './locationSearch'
 declare global {
@@ -198,7 +198,6 @@ class SingletonWxAuth {
 
   // 去除链接上面的code和STATE参数，跳转到项目地址
   public wxAuthLocationReplace() {
-    alert('重定位')
     // 去除code和state参数，然后跳转到页面地址
     const re = /(code=[A-Za-z0-9-=_]+&state=STATE[&]{0,1})/
     let currentUrl = window.location.href.replace(re, '')
@@ -219,11 +218,10 @@ class SingletonWxAuth {
                 this.wxAuthLocationReplace()
               })
               .catch((err) => {
-                alert('授权失败')
                 reject(err)
               })
           } else {
-            // 获取授权信息
+            // 从session中获取授权信息
             this._isAuth = !!this.getAuthFromSession()
             if (this._isAuth) {
               resolve({
