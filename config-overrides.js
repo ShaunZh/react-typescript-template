@@ -26,7 +26,7 @@ module.exports = override(
       rootValue: 32,
       propList: ['*'],
       // 转换忽略规则
-      selectorBlackList: ['am-', /^html$/]
+      selectorBlackList: ['am-', /^html$/, /^body$/]
       // propList: ['*', '!border*', '!font-size*', '!letter-spacing'],
       // propWhiteList: []
     })

@@ -19,5 +19,6 @@ module.exports = {
   rules: {
     // 这里填入你的项目需要的个性化配置
     // semi: 'error'
+    // 'no-invalid-this': 0
   }
 }
