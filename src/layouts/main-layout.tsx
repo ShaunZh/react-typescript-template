@@ -3,12 +3,14 @@
  * @Author: Hexon
  * @Date: 2019-10-28 17:26:29
  * @LastEditors: Hexon
- * @LastEditTime: 2019-12-18 17:22:32
+ * @LastEditTime: 2019-12-18 18:41:23
  */
 
 import * as React from 'react'
 import { TabBar } from 'antd-mobile'
 import { createHashHistory } from 'history'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+
 import { connect, ConnectedProps } from 'react-redux'
 import statusImg from '../assets/images/status.svg'
 import statusActiveImg from '../assets/images/status-active.svg'
@@ -55,12 +57,19 @@ interface HttpResponseAuth extends HttpResponse {
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
-type Props = PropsParent & PropsFromRedux
+type Props = PropsParent & PropsFromRedux & RouteComponentProps
 
 class MainLayout extends React.Component<Props> {
+  public componentDidUpdate(prevProps: Props) {
+    // 设置底部菜单当前激活的tab
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      this.setMenuCurTab(this.props.location.pathname)
+    }
+    console.log('prevProps: ', prevProps)
+    console.log('cur Props: ', this.props)
+  }
   public async componentDidMount() {
     // 根据window.location.hash来设置state.currentTab以便初始化激活的底部talocation.hash来设置state.currentTab以便初始化激活的底部tabb
-    console.log('props', window.location.hash)
     const searchParams = locationSearch(window.location.search)
     try {
       const resp = await WxInstance.wxAuth(authApi.authWxJssdk, authApi.auth, {
@@ -93,8 +102,8 @@ class MainLayout extends React.Component<Props> {
               ...this.props.user,
               role: 'user'
             })
-            // 更新当前激活的菜单tab
-            this.setMenuCurTab()
+            // // 更新当前激活的菜单tab
+            // this.setMenuCurTab()
             console.log('authed')
           }
           break
@@ -121,8 +130,8 @@ class MainLayout extends React.Component<Props> {
     }
   }
 
-  public setMenuCurTab() {
-    const href = window.location.hash
+  public setMenuCurTab(pathname: string) {
+    const href = pathname
     let curTab = ''
     if (href.includes('/activity-photo')) {
       curTab = 'activity-photo'
@@ -174,9 +183,9 @@ class MainLayout extends React.Component<Props> {
               selected={this.props.curTab === 'activity-photo'}
               badge={1}
               onPress={() => {
-                this.props.updateCurTab({
-                  curTab: 'activity-photo'
-                })
+                // this.props.updateCurTab({
+                //   curTab: 'activity-photo'
+                // })
                 createHashHistory().push('/activity-photo')
               }}
               data-seed="logId"
@@ -209,9 +218,9 @@ class MainLayout extends React.Component<Props> {
               badge="new"
               selected={this.props.curTab === 'today-status'}
               onPress={() => {
-                this.props.updateCurTab({
-                  curTab: 'today-status'
-                })
+                // this.props.updateCurTab({
+                //   curTab: 'today-status'
+                // })
                 createHashHistory().push('/today-status')
               }}
               data-seed="logId1"
@@ -242,9 +251,9 @@ class MainLayout extends React.Component<Props> {
               dot
               selected={this.props.curTab === 'daily-food'}
               onPress={() => {
-                this.props.updateCurTab({
-                  curTab: 'daily-food'
-                })
+                // this.props.updateCurTab({
+                //   curTab: 'daily-food'
+                // })
                 createHashHistory().push('/daily-food')
               }}
             >
@@ -257,9 +266,9 @@ class MainLayout extends React.Component<Props> {
               key="more"
               selected={this.props.curTab === 'more'}
               onPress={() => {
-                this.props.updateCurTab({
-                  curTab: 'more'
-                })
+                // this.props.updateCurTab({
+                //   curTab: 'more'
+                // })
                 createHashHistory().push('/more')
               }}
             >
@@ -272,4 +281,4 @@ class MainLayout extends React.Component<Props> {
   }
 }
 
-export default connector(MainLayout)
+export default withRouter(connector(MainLayout))
