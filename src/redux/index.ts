@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import userReducer from './modules/user/reducer'
 import tokenReducer from './modules//auth/reducer'
+import commonReducer from './modules//common/reducere'
 
 // combineReducers返回值是一个function，该函数的返回值是state
 const rootReducer = combineReducers({
   user: userReducer,
-  auth: tokenReducer
+  auth: tokenReducer,
+  common: commonReducer
 })
 
 // <typeof rootReducer> === combineReducers的返回值，也就是一个function
