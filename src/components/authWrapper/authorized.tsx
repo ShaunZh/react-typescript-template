@@ -1,5 +1,13 @@
 import React, { ReactElement } from 'react'
 import { UserState } from '@/redux/modules/user/types'
+import { connect, ConnectedProps } from 'react-redux'
+import { AppState } from '@/redux'
+
+const mapState = (state: AppState) => ({
+  user: state.user
+})
+const connector = connect(mapState)
+type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface PropsFromParent {
   user: UserState
@@ -7,7 +15,7 @@ interface PropsFromParent {
   auth: Array<string> | string // 权限
   noMatch: React.ReactNode // 没有权限时返回的信息
 }
-type Props = PropsFromParent
+type Props = PropsFromRedux & PropsFromParent
 
 // 注意：因为AuthWrapper是作为一个组件被使用的，返回值需要添加 as ReactElement<any> 来避免typescript报错
 // 参考：https://stackoverflow.com/questions/54905376/type-error-jsx-element-type-null-undefined-is-not-a-constructor-functi
@@ -20,4 +28,4 @@ function Authorized(props: Props) {
   return noMatch as ReactElement<any>
 }
 
-export default Authorized
+export default connect(mapState)(Authorized)
