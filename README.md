@@ -11,9 +11,12 @@
 - webpack别名和typescript别名支持，主要分成两步实现，参考[typescript + webpack别名配置](https://www.jianshu.com/p/6f8a98a9f2e2)
   1. webpack别名：通过[customize-cra](https://github.com/arackaf/customize-cra)来设置webpack别名，也就是在config-overrides.js中进行配置
   2. typescript别名：在tsconfi.json中通过设置extends来实现
-
+- 如果要在项目工程添加或修改功能，可以先查看[create-react-app文档](https://create-react-app.dev/docs/documentation-intro)中是否有相关的功能
+- [设置环境变量](https://create-react-app.dev/docs/adding-custom-environment-variables/)
+- [设置开发环境的http请求代理](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
 
 
 ## 开发问题记录
 1. 部署路径问题
 如果代码部署的不是root URL(也就是根域名)，那么package.json中需要配置为 homepage: "."
+2. 尽量不要使用[React.FunctionCompnent(或者React.FC)](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
