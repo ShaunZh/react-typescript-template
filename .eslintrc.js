@@ -17,6 +17,7 @@ module.exports = {
     // myGlobal: false
   },
   rules: {
+    '@typescript-eslint/prefer-optional-chain': 0 // 关闭typescript的optional-chaining语法
     // 这里填入你的项目需要的个性化配置
     // semi: 'error'
     // 'no-invalid-this': 0
