@@ -1,4 +1,4 @@
-import { USER_UPDATE, UserState, UserActionTypes, USER_UPDATE_QUERY_DATE } from './types'
+import { USER_UPDATE, UserState, UserActionTypes, USER_UPDATE_QUERY_DATE, USER_UPDATE_ROLE } from './types'
 
 const initialState: UserState = {
   name: '', // 名称
@@ -12,6 +12,7 @@ export default function userReducer(state = initialState, action: UserActionType
   switch (action.type) {
     case USER_UPDATE:
     case USER_UPDATE_QUERY_DATE:
+    case USER_UPDATE_ROLE:
       return {
         ...state,
         ...action.payload
