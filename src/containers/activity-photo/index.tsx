@@ -3,7 +3,7 @@ import { connect, ConnectedProps } from 'react-redux'
 // import userApi from '@api/user'
 import { NavLink } from 'react-router-dom'
 import { AppState } from '@/redux'
-import { USER_UPDATE, UserState, QueryDate, USER_UPDATE_QUERY_DATE } from '@/redux/modules/user/types'
+import { USER_UPDATE, UserState, QueryDateState, USER_UPDATE_QUERY_DATE } from '@/redux/modules/user/types'
 
 import HeadImg from './components/headImg'
 import './index.scss'
@@ -14,7 +14,7 @@ const mapState = (state: AppState) => ({
 
 const mapDispatch = {
   updateUsername: (userInfo: UserState) => ({ type: USER_UPDATE, payload: userInfo }),
-  updateQueryDate: (date: QueryDate) => ({ type: USER_UPDATE_QUERY_DATE, payload: date })
+  updateQueryDate: (date: QueryDateState) => ({ type: USER_UPDATE_QUERY_DATE, payload: date })
 }
 
 const connector = connect(
