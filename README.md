@@ -14,6 +14,7 @@
 - 如果要在项目工程添加或修改功能，可以先查看[create-react-app文档](https://create-react-app.dev/docs/documentation-intro)中是否有相关的功能
 - [设置环境变量](https://create-react-app.dev/docs/adding-custom-environment-variables/)
 - [设置开发环境的http请求代理](https://create-react-app.dev/docs/proxying-api-requests-in-development/)
+- 使用[redux-chunk](https://github.com/reduxjs/redux-thunk)中间件来实现redux异步操作，[redux-chunk typescript实现](https://github.com/reduxjs/redux-thunk/blob/master/test/typescript.ts)，参考:[Typescript with Redux, & Redux-Thunk Recipe](https://medium.com/@peatiscoding/typescripts-with-redux-redux-thunk-recipe-fcce4ffca405)，需要注意的是redux-chunk的typescript编写方法
 
 
 ## 开发问题记录

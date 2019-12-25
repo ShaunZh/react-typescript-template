@@ -3,13 +3,14 @@
  * @Author: Hexon
  * @Date: 2019-10-28 17:26:29
  * @LastEditors  : Hexon
- * @LastEditTime : 2019-12-24 11:04:17
+ * @LastEditTime : 2019-12-25 19:45:48
  */
 
 import * as React from 'react'
 import { TabBar } from 'antd-mobile'
 import { createHashHistory } from 'history'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { ThunkDispatch } from 'redux-thunk'
 
 import { connect, ConnectedProps } from 'react-redux'
 import statusImg from '../assets/images/status.svg'
@@ -17,17 +18,10 @@ import statusActiveImg from '../assets/images/status-active.svg'
 import payImg from '../assets/images/pay.svg'
 import payActiveImg from '../assets/images/pay-active.svg'
 
-import authApi from '@/api/auth'
-import locationSearch from '@/utils/locationSearch'
-import WxAuth from '@/utils/wxAuth'
-import { UpdateRoleState, USER_UPDATE_ROLE } from '@/redux/modules/user/types'
-import { AuthState, AUTH_UPDATE } from '@/redux/modules/auth/types'
 import { COMMON_UPDATE_MENU_TAB, CommonUpdateMenuTabState } from '@/redux/modules/common/types'
+import { wxAuthLogin } from '@/redux/modules/auth/action'
 
 import { AppState } from '@/redux/'
-import { setToken } from '@/utils/auth'
-
-const WxInstance = WxAuth.getInstance()
 
 const mapState = (state: AppState) => ({
   role: state.user.role,
@@ -35,30 +29,23 @@ const mapState = (state: AppState) => ({
   curTab: state.common.curTab
 })
 
-const mapDispatch = {
-  updateCurTab: (curTab: CommonUpdateMenuTabState) => ({ type: COMMON_UPDATE_MENU_TAB, payload: curTab }),
-  updateToken: (token: AuthState) => ({ type: AUTH_UPDATE, payload: token }),
-  updateRole: (role: UpdateRoleState) => ({ type: USER_UPDATE_ROLE, payload: role })
+const mapDispatch = (dispatch: ThunkDispatch<{}, {}, any>) => {
+  return {
+    wxAuthLogin: async () => {
+      const resp = await dispatch(wxAuthLogin())
+      console.log('wx auth login: ', resp)
+      // 可以通过返回Promise.resolve来进行授权后的操作
+      return Promise.resolve(resp)
+    },
+    updateCurTab: (curTab: CommonUpdateMenuTabState) => dispatch({ type: COMMON_UPDATE_MENU_TAB, payload: curTab })
+  }
 }
 
-const connector = connect(
-  mapState,
-  mapDispatch
-)
+const connector = connect(mapState, mapDispatch)
 interface PropsParent {
   children: React.ReactNode // 子组件
 }
 
-interface HttpResponseAuth extends HttpResponse {
-  result: {
-    Authorization: string
-  }
-}
-
-interface LoginInfo {
-  token: string
-  role: string
-}
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 type Props = PropsParent & PropsFromRedux & RouteComponentProps
@@ -72,75 +59,14 @@ class MainLayout extends React.Component<Props> {
     console.log('prevProps: ', prevProps)
     console.log('cur Props: ', this.props)
   }
-  public login(loginInfo: LoginInfo) {
-    setToken(loginInfo.token)
-    // 已经授权过的，无操作
-    this.props.updateToken({
-      token: loginInfo.token
-    })
 
-    this.props.updateRole({
-      role: loginInfo.role
-    })
-  }
-  public async componentDidMount() {
+  public componentDidMount() {
     // 解决刷新页面时，底部菜单无激活的tab
     if (this.props.location.pathname) {
       this.setMenuCurTab(this.props.location.pathname)
     }
-    // 根据window.location.hash来设置state.currentTab以便初始化激活的底部talocation.hash来设置state.currentTab以便初始化激活的底部tabb
-    const searchParams = locationSearch(window.location.search)
-    try {
-      const resp = await WxInstance.wxAuth(authApi.authWxJssdk, authApi.auth, {
-        auth: {
-          code: searchParams.code,
-          type: 'parent',
-          clientKey: searchParams.clientKey || ''
-        },
-        signature: {
-          clientKey: searchParams.clientKey || '',
-          url: window.location.href.split('#')[0]
-        }
-      })
-      // 微信授权过会将token信息存放到sessionStorage中，此时，从session中取得授权信息
-      let authInfo: HttpResponseAuth = WxInstance.getAuthFromSession()
-      switch (resp.authStatus) {
-        // case 'authSuccess':
-        //   setToken(resp.authInfo.result.Authorization)
-        //   console.log('authSuccess')
-        //   break
-        case 'authed':
-          if (authInfo && authInfo.result && authInfo.result.Authorization) {
-            this.login({
-              token: authInfo.result.Authorization || 'temp authorization',
-              role: 'user'
-            })
-          }
-          break
-        case 'noAuth':
-          if (process.env.NODE_ENV === 'development') {
-            this.login({
-              token: authInfo.result.Authorization || 'temp authorization',
-              role: 'user'
-            })
-            console.log('noAuth: development')
-          }
-          console.log('noAuth')
-          break
-        default:
-          break
-      }
-    } catch (e) {
-      if (process.env.NODE_ENV === 'development') {
-        this.login({
-          token: 'temp authorization',
-          role: 'user'
-        })
-        console.log('noAuth: development')
-      }
-      // 授权失败的跳转到白板页面
-      console.log('err: ', e.message)
-    }
+    this.props.wxAuthLogin()
+    // this.wxAuthLogin()
   }
 
   public setMenuCurTab(pathname: string) {
