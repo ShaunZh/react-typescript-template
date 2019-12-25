@@ -2,5 +2,5 @@
 export const AXIOS_DEFAULT_CONFIG = {
   timeout: 30000,
   'Content-Type': 'application/json',
-  baseURL: '' // 测试
+  baseURL: process.env.REACT_APP_BASE_API
 }
