@@ -3,14 +3,13 @@
  * @Author: Hexon
  * @Date: 2019-10-28 17:26:29
  * @LastEditors  : Hexon
- * @LastEditTime : 2019-12-25 19:45:48
+ * @LastEditTime : 2020-01-08 15:38:41
  */
 
 import * as React from 'react'
 import { TabBar } from 'antd-mobile'
 import { createHashHistory } from 'history'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { ThunkDispatch } from 'redux-thunk'
 
 import { connect, ConnectedProps } from 'react-redux'
 import statusImg from '../assets/images/status.svg'
@@ -18,27 +17,32 @@ import statusActiveImg from '../assets/images/status-active.svg'
 import payImg from '../assets/images/pay.svg'
 import payActiveImg from '../assets/images/pay-active.svg'
 
-import { COMMON_UPDATE_MENU_TAB, CommonUpdateMenuTabState } from '@/redux/modules/common/types'
-import { wxAuthLogin } from '@/redux/modules/auth/action'
+import { authAsync } from '@/redux/modules/auth/action'
+import { updateMenu } from '@/redux/modules/common/action'
+import { AuthActionType } from '@/redux/modules/auth/types'
 
-import { AppState } from '@/redux/'
-
-const mapState = (state: AppState) => ({
+import { RootState } from 'typesafe-actions'
+const mapState = (state: RootState) => ({
   role: state.user.role,
-  token: state.auth.token,
-  curTab: state.common.curTab
+  authStatus: state.auth.status,
+  curTab: state.common.menu
 })
 
-const mapDispatch = (dispatch: ThunkDispatch<{}, {}, any>) => {
-  return {
-    wxAuthLogin: async () => {
-      const resp = await dispatch(wxAuthLogin())
-      console.log('wx auth login: ', resp)
-      // 可以通过返回Promise.resolve来进行授权后的操作
-      return Promise.resolve(resp)
-    },
-    updateCurTab: (curTab: CommonUpdateMenuTabState) => dispatch({ type: COMMON_UPDATE_MENU_TAB, payload: curTab })
-  }
+// const mapDispatch = (dispatch: ThunkDispatch<{}, {}, any>) => {
+//   return {
+//     wxAuthLogin: async () => {
+//       const resp = await dispatch(wxAuthLogin())
+//       console.log('wx auth login: ', resp)
+//       // 可以通过返回Promise.resolve来进行授权后的操作
+//       return Promise.resolve(resp)
+//     },
+//     updateCurTab: (curTab: CommonUpdateMenuTabState) => dispatch({ type: COMMON_UPDATE_MENU_TAB, payload: curTab })
+//   }
+// }
+
+const mapDispatch = {
+  wxAuthLogin: authAsync.request,
+  updateCurTab: (curTab: string) => updateMenu(curTab)
 }
 
 const connector = connect(mapState, mapDispatch)
@@ -56,8 +60,8 @@ class MainLayout extends React.Component<Props> {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       this.setMenuCurTab(this.props.location.pathname)
     }
-    console.log('prevProps: ', prevProps)
-    console.log('cur Props: ', this.props)
+    // console.log('prevProps: ', prevProps)
+    // console.log('cur Props: ', this.props)
   }
 
   public componentDidMount() {
@@ -81,18 +85,15 @@ class MainLayout extends React.Component<Props> {
     } else if (href.includes('/more')) {
       curTab = 'more'
     }
-    this.props.updateCurTab({
-      curTab
-    })
+    this.props.updateCurTab(curTab)
   }
 
   public render() {
-    console.log('token: ', this.props.token.length)
     return (
       <div className="layout">
         <div className="main-container">
           {/* 注： 此处必须要同时判断token和role，因为token和role所处于两个不同的redux module，其更新有先后顺序，因此要同时判断 */}
-          {this.props.token.length && this.props.role.length ? this.props.children : ''}
+          {this.props.authStatus === AuthActionType.FETCH_SUCCESS ? this.props.children : ''}
         </div>
         <div className="nav-tab-container" style={{ position: 'fixed', height: '50px', width: '100%', bottom: 0 }}>
           <TabBar

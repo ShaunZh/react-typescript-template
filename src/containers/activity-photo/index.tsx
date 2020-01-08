@@ -2,25 +2,23 @@ import * as React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 // import userApi from '@api/user'
 import { NavLink } from 'react-router-dom'
-import { AppState } from '@/redux'
-import { USER_UPDATE, UserState, QueryDateState, USER_UPDATE_QUERY_DATE } from '@/redux/modules/user/types'
+import { RootState } from 'typesafe-actions'
+import { updateDate, updateUserInfo } from '@/redux/modules/user/action'
+import { UserInfo } from '@/redux/modules/user/types'
 
 import HeadImg from './components/headImg'
 import './index.scss'
 
-const mapState = (state: AppState) => ({
+const mapState = (state: RootState) => ({
   user: state.user
 })
 
 const mapDispatch = {
-  updateUsername: (userInfo: UserState) => ({ type: USER_UPDATE, payload: userInfo }),
-  updateQueryDate: (date: QueryDateState) => ({ type: USER_UPDATE_QUERY_DATE, payload: date })
+  updateUsername: (userInfo: UserInfo) => updateUserInfo(userInfo),
+  updateQueryDate: (date: string) => updateDate(date)
 }
 
-const connector = connect(
-  mapState,
-  mapDispatch
-)
+const connector = connect(mapState, mapDispatch)
 
 interface State {
   username: string
@@ -33,6 +31,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type Props = PropsFromRedux
 
 class ActivityPhoto extends React.Component<Props, State> {
+  private inputRef = React.createRef<HTMLInputElement>()
   public constructor(props: Props) {
     super(props)
     this.state = { username: '', queryDate: '' }
@@ -42,6 +41,7 @@ class ActivityPhoto extends React.Component<Props, State> {
 
   public componentDidMount() {
     console.log('componentDidMount')
+    this.focus()
   }
   public updateMessage(e: React.FormEvent<HTMLInputElement>): void {
     console.log('this: ', this)
@@ -51,13 +51,16 @@ class ActivityPhoto extends React.Component<Props, State> {
   }
 
   public updateQueryDate(e: React.FormEvent<HTMLInputElement>): void {
-    this.props.updateQueryDate({ queryDate: e.currentTarget.value })
+    this.props.updateQueryDate(e.currentTarget.value)
+  }
+  public focus() {
+    this.inputRef.current!.focus()
   }
   public render() {
     return (
       <div className="activity-photo-container">
         <div className="header">
-          <HeadImg src={this.props.user.headImg}></HeadImg>
+          <HeadImg src={this.props.user.headImg} />
         </div>
         <h1>活动照片: {this.props.user.name}</h1>
         <h1>查询人气：{this.props.user.queryDate}</h1>
@@ -66,6 +69,7 @@ class ActivityPhoto extends React.Component<Props, State> {
           onChange={this.updateMessage}
           className="chat-input"
           placeholder="请输入用户名"
+          ref={this.inputRef}
         />
         <br />
         <input value={this.props.user.queryDate} onChange={this.updateQueryDate} placeholder="请输入查询日期" />
@@ -75,7 +79,4 @@ class ActivityPhoto extends React.Component<Props, State> {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(ActivityPhoto)
+export default connect(mapState, mapDispatch)(ActivityPhoto)

@@ -5,7 +5,7 @@ import Authorized from './authorized'
 interface PropsFromParent {
   key: string
   path: string
-  auth: Array<string> | string
+  auth?: Array<string> | string
   redirectPath?: string
   component: React.ComponentType<RouteComponentProps<any>> | React.ComponentType<any>
   render: (props: RouteComponentProps<any>) => React.ReactNode
@@ -14,7 +14,7 @@ interface PropsFromParent {
 type Props = PropsFromParent
 
 function AuthorizedRoute(props: Props) {
-  const { component: Component, render, auth, redirectPath, ...rest } = props
+  const { component: Component, render, auth = '', redirectPath, ...rest } = props
   return (
     <Authorized auth={auth} noMatch={<Route {...rest} render={() => <Redirect to={{ pathname: redirectPath }} />} />}>
       <Route {...rest} render={(props) => (Component ? <Component {...props} /> : render(props))} />

@@ -11,7 +11,7 @@ export default class RouteConfig extends Component<{}> {
       <HashRouter>
         <MainLayout>
           <Switch>
-            <Redirect from="/" to="/activity-photo" exact></Redirect>
+            <Redirect from="/" to="/activity-photo" exact />
             {routes.map((rc) => {
               const { path, component, auth = '', redirectPath = '/no-auth', ...rest } = rc
               return (
