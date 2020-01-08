@@ -3,10 +3,10 @@ import './App.css'
 import Router from './router'
 import '@/assets/styles/index.scss'
 
-const App: React.FunctionComponent = () => {
+const App = () => {
   return (
     <div className="App">
-      <Router></Router>
+      <Router />
     </div>
   )
 }

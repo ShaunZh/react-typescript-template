@@ -1,23 +1,18 @@
-import { AuthState, AuthActions, AUTH_DELETE, AUTH_UPDATE } from './types'
+import { combineReducers } from 'redux'
+import { AuthActionType } from './types'
+import { authAsync } from './action'
+import { createReducer } from 'typesafe-actions'
 
-const initialState: AuthState = {
+export const status = createReducer('')
+  .handleAction(authAsync.request, () => AuthActionType.FETCH_REQUEST)
+  .handleAction(authAsync.success, () => AuthActionType.FETCH_SUCCESS)
+  .handleAction(authAsync.failure, () => AuthActionType.FETCH_FAILURE)
+
+export const auth = createReducer({
   token: ''
-}
+}).handleAction(authAsync.success, (state, action) => ({ ...state, token: action.payload }))
 
-export default function authReduecer(state = initialState, action: AuthActions): AuthState {
-  switch (action.type) {
-    case AUTH_UPDATE:
-      return {
-        ...state,
-        ...action.payload
-      }
+const authReducer = combineReducers({ status, auth })
 
-    case AUTH_DELETE:
-      return {
-        ...state,
-        token: ''
-      }
-    default:
-      return state
-  }
-}
+export default authReducer
+export type AuthState = ReturnType<typeof authReducer>

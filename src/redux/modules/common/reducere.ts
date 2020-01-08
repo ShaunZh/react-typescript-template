@@ -1,17 +1,12 @@
-import { CommonState, CommonActions, COMMON_UPDATE_MENU_TAB } from './types'
+import { combineReducers } from 'redux'
+import { createReducer } from 'typesafe-actions'
+import { updateMenu } from './action'
 
-const initialState: CommonState = {
-  curTab: ''
-}
+export const menu = createReducer('').handleAction(updateMenu, (state, action) => action.payload)
 
-export default function commonReducers(state = initialState, action: CommonActions): CommonState {
-  switch (action.type) {
-    case COMMON_UPDATE_MENU_TAB:
-      return {
-        ...state,
-        ...action.payload
-      }
-    default:
-      return state
-  }
-}
+const commonReducer = combineReducers({
+  menu
+})
+
+export default commonReducer
+export type CommonState = ReturnType<typeof commonReducer>

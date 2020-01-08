@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 import App from './App'
-import configureStore from './redux/'
+import store from './redux/'
 
-const store = configureStore()
+// const store = configureStore()
 
 const Root = () => (
   <Provider store={store}>

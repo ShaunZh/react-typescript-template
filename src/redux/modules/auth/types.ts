@@ -1,17 +1,5 @@
-export const AUTH_UPDATE = 'AUTH_UPDATE'
-export const AUTH_DELETE = 'AUTH_DELETE'
-
-export interface AuthState {
-  token: string
+export enum AuthActionType {
+  FETCH_REQUEST = '@auth/FETCH_REQUEST',
+  FETCH_SUCCESS = '@auth/FETCH_SUCCESS',
+  FETCH_FAILURE = '@auth/FETCH_FAILURE'
 }
-
-export interface AuthUpdateAction {
-  type: typeof AUTH_UPDATE
-  payload: AuthState
-}
-
-export interface AuthDeleteAction {
-  type: typeof AUTH_DELETE
-}
-
-export type AuthActions = AuthUpdateAction | AuthDeleteAction

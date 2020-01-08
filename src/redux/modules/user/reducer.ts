@@ -1,23 +1,16 @@
-import { USER_UPDATE, UserState, UserActionTypes, USER_UPDATE_QUERY_DATE, USER_UPDATE_ROLE } from './types'
+import { createReducer } from 'typesafe-actions'
+import { updateDate, updateUserInfo } from './action'
+import { ReactType } from 'react'
 
-const initialState: UserState = {
-  name: '', // 名称
-  headImg: '', // 头像
+const userReducer = createReducer({
+  name: '', // 姓名
   class: '', // 班级
+  headImg: '', // 头像
   queryDate: '', // 查询日期
   role: '' // 角色
-}
+})
+  .handleAction(updateDate, (state, action) => ({ ...state, queryDate: action.payload }))
+  .handleAction(updateUserInfo, (state, action) => ({ ...state, ...action.payload }))
 
-export default function userReducer(state = initialState, action: UserActionTypes): UserState {
-  switch (action.type) {
-    case USER_UPDATE:
-    case USER_UPDATE_QUERY_DATE:
-    case USER_UPDATE_ROLE:
-      return {
-        ...state,
-        ...action.payload
-      }
-    default:
-      return state
-  }
-}
+export default userReducer
+export type UserState = ReactType<typeof userReducer>

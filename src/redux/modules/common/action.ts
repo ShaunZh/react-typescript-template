@@ -1,8 +1,5 @@
-import { COMMON_UPDATE_MENU_TAB, CommonActions, CommonUpdateMenuTabState } from './types'
+import { createAction } from 'typesafe-actions'
 
-export function commonUpdateMenuTab(curTab: CommonUpdateMenuTabState): CommonActions {
-  return {
-    type: COMMON_UPDATE_MENU_TAB,
-    payload: curTab
-  }
-}
+import { UPDATE_MENU } from './types'
+
+export const updateMenu = createAction(UPDATE_MENU)<string>()

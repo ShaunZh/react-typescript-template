@@ -1,30 +1,5 @@
-import {
-  USER_UPDATE,
-  USER_UPDATE_QUERY_DATE,
-  USER_UPDATE_ROLE,
-  UserState,
-  UserActionTypes,
-  QueryDateState,
-  UpdateRoleState
-} from './types'
-// action creator
-export function updateUser(userInfo: UserState): UserActionTypes {
-  return {
-    type: USER_UPDATE,
-    payload: userInfo
-  }
-}
+import { createAction } from 'typesafe-actions'
+import { UPDATE_QUERY_DATE, UPDATE_USER_INFO, UserInfo } from './types'
 
-export function updateDate(queryDate: QueryDateState): UserActionTypes {
-  return {
-    type: USER_UPDATE_QUERY_DATE,
-    payload: queryDate
-  }
-}
-
-export function updateRole(roleInfo: UpdateRoleState): UserActionTypes {
-  return {
-    type: USER_UPDATE_ROLE,
-    payload: roleInfo
-  }
-}
+export const updateDate = createAction(UPDATE_QUERY_DATE)<string>()
+export const updateUserInfo = createAction(UPDATE_USER_INFO)<UserInfo>()
