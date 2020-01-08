@@ -7,22 +7,23 @@ import NoAuth from '@/containers/noAuth'
 const routes = [
   {
     path: '/activity-photo',
+    auth: [''],
     component: ActivityPhoto
   },
   {
     path: '/today-status',
-    auth: ['user'],
+    // auth: [''],
     component: TodayStatus
   },
   {
     path: '/daily-food',
-    auth: ['user'],
+    // auth: [''],
     redirectPath: '/no-auth',
     component: DailyFood
   },
   {
     path: '/more',
-    auth: ['user'],
+    // auth: [''],
     component: More
   },
   // 无权限页面
