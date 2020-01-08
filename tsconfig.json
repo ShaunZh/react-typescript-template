@@ -15,20 +15,24 @@
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
+    "removeComments": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
     "typeRoots": [
-      "./node_modules/@types",
-      "./src/types/"
+      "./src/types/",
+      "./node_modules/@types"
     ]
   },
   "include": [
     "src"
   ],
   "exclude": [
-    "./deploy/*"
+    "deploy",
+    "node_modules",
+    "build",
+    "public"
   ],
   "extends": "./paths.json"
 }
