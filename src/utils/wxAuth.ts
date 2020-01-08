@@ -2,8 +2,8 @@
  * @Description:
  * @Author: Hexon
  * @Date: 2019-12-13 16:36:10
- * @LastEditors: Hexon
- * @LastEditTime: 2019-12-18 15:03:36
+ * @LastEditors  : Hexon
+ * @LastEditTime : 2020-01-08 11:14:49
  */
 import locationSearch from './locationSearch'
 declare global {
@@ -228,9 +228,7 @@ class SingletonWxAuth {
                 authStatus: 'authed'
               })
             } else {
-              resolve({
-                authStatus: 'noAuth'
-              })
+              reject(new Error('no code，no auth'))
             }
           }
         })
