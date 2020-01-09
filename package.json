@@ -32,10 +32,11 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && npm run lint:css",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "prettier": "prettier -l \".src/**/*\"",
+    "lint:css": "stylelint './src/**/*.{js,ts,tsx}' --formatter verbose",
     "deploy": "react-app-rewired build && node ./deploy/index.js"
   },
   "eslintConfig": {
@@ -67,6 +68,10 @@
     "prettier": "^1.19.1",
     "redux-devtools-extension": "^2.13.8",
     "scp2": "^0.5.0",
+    "stylelint": "^12.0.1",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.9.0",
     "typescript": "^3.7.4"
   }
 }

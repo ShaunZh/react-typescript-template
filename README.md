@@ -17,8 +17,12 @@
 - ~~使用[redux-thunk](https://github.com/reduxjs/redux-thunk)中间件来实现redux异步操作，[redux-thunk typescript实现](https://github.com/reduxjs/redux-thunk/blob/master/test/typescript.ts)，参考:[Typescript with Redux, & Redux-Thunk Recipe](https://medium.com/@peatiscoding/typescripts-with-redux-redux-thunk-recipe-fcce4ffca405)，需要注意的是redux-chunk的typescript编写方法~~
 - 使用[redux-observable](https://redux-observable.js.org/)和[rxjs](https://rxjs.dev/api/index/function/from)作为异步处理
 - 使用[typesafe-actions中间件](https://github.com/piotrwitek/typesafe-actions#constants)
+- vscode安装vscode-styled-components插件，用于styled-components样式检查
 
 ## 开发问题记录
 1. 部署路径问题
 如果代码部署的不是root URL(也就是根域名)，那么package.json中需要配置为 homepage: "."
 2. 尽量不要使用[React.FunctionCompnent(或者React.FC)](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
+
+## TODO
+- stylelint对样式进行检查，需要分成两步，一、对styled-components进行style样式检查，二、对css、scss进行样式检查
