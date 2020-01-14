@@ -3,7 +3,7 @@
  * @Author: Hexon
  * @Date: 2019-12-13 16:36:10
  * @LastEditors  : Hexon
- * @LastEditTime : 2020-01-08 11:14:49
+ * @LastEditTime : 2020-01-09 18:47:31
  */
 import locationSearch from './locationSearch'
 declare global {
