@@ -1,0 +1,14 @@
+.nav-tab-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  height: 50px;
+  bottom: 0;
+  .item {
+    color: #000;
+    &.active {
+      color: red;
+    }
+  }
+}
